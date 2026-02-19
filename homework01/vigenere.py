@@ -11,6 +11,7 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
             ciphertext += char
     return ciphertext
 
+
 def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     plaintext = ""
     for i, char in enumerate(ciphertext):
@@ -23,3 +24,4 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
         else:
             plaintext += char
     return plaintext
+

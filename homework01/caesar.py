@@ -9,6 +9,7 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
             ciphertext += char
     return ciphertext
 
+
 def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     plaintext = ""
     for char in ciphertext:
@@ -19,3 +20,4 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
         else:
             plaintext += char
     return plaintext
+
