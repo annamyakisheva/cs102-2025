@@ -52,7 +52,7 @@ def multiplicative_inverse(e: int, phi: int) -> int:
     if phi == 1:
         return 0
     while e > 1:
-        q = // phi
+        q = e // phi
         t = phi
         phi = e % phi
         e = t
