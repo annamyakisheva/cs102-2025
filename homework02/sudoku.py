@@ -65,10 +65,7 @@ def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
     >>> get_col([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (0, 2))
     ['3', '6', '9']
     """
-    (
-        _,
-        col_idx,
-    ) = pos
+    col_idx, _ = pos
     return [row[col_idx] for row in grid]
     pass
 
@@ -86,12 +83,10 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     row, col = pos
     start_row = (row // 3) * 3
     start_col = (col // 3) * 3
-
     block_values = []
     for r in range(start_row, start_row + 3):
         for c in range(start_col, start_col + 3):
             block_values.append(grid[r][c])
-
     return block_values
     pass
 
@@ -106,7 +101,7 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
     (2, 0)
     """
     for r in range(len(grid)):
-        for c in range(len(grid)):
+        for c in range(len(grid[0])):
             if grid[r][c] == ".":
                 return (r, c)
     return None
@@ -124,10 +119,7 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     True
     """
     all_values = set("123456789")
-    used_in_row = set(get_row(grid, pos))
-    used_in_col = set(get_col(grid, pos))
-    used_in_block = set(get_block(grid, pos))
-    used_values = used_in_row | used_in_col | used_in_block
+    used_values = set(get_row(grid, pos)) | set(get_col(grid, pos)) | set(get_block(grid, pos))
     return all_values - used_values
     pass
 
@@ -150,10 +142,14 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
 
     row, col = empty_pos
     possible_values = find_possible_values(grid, empty_pos)
+
     for value in possible_values:
+        grid[row][col] = value
+        solution = solve(grid)
         if solution:
             return solution
         grid[row][col] = "."
+
     return None
     pass
 
@@ -162,7 +158,6 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     """Если решение solution верно, то вернуть True, в противном случае False"""
     # TODO: Add doctests with bad puzzles
     correct_set = set("123456789")
-
     for r in range(9):
         for c in range(9):
             pos = (r, c)
@@ -172,7 +167,6 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
                 return False
             if set(get_block(solution, pos)) != correct_set:
                 return False
-
     return True
     pass
 
@@ -202,17 +196,15 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     solution = solve(grid)
     if not solution:
         return grid
-    if N > 81:
-        N = 81
 
-    positions_to_remove = 81 - N
+    N = min(N, 81)
     new_grid = [row[:] for row in solution]
     all_positions = [(r, c) for r in range(9) for c in range(9)]
     random.shuffle(all_positions)
-    for i in range(positions_to_remove):
+
+    for i in range(81 - N):
         r, c = all_positions[i]
         new_grid[r][c] = "."
-
     return new_grid
     pass
 
