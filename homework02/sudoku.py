@@ -65,7 +65,7 @@ def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
     >>> get_col([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (0, 2))
     ['3', '6', '9']
     """
-    col_idx, _ = pos
+    _, col_idx = pos
     return [row[col_idx] for row in grid]
     pass
 
@@ -101,7 +101,7 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
     (2, 0)
     """
     for r in range(len(grid)):
-        for c in range(len(grid[0])):
+        for c in range(len(grid)):
             if grid[r][c] == ".":
                 return (r, c)
     return None
@@ -146,8 +146,10 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     for value in possible_values:
         grid[row][col] = value
         solution = solve(grid)
+
         if solution:
             return solution
+
         grid[row][col] = "."
 
     return None
