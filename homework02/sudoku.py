@@ -64,7 +64,10 @@ def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
     >>> get_col([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (0, 2))
     ['3', '6', '9']
     """
-    _, col_idx, = pos
+    (
+        _,
+        col_idx,
+    ) = pos
     return [row[col_idx] for row in grid]
     pass
 
@@ -79,7 +82,7 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     >>> get_block(grid, (8, 8))
     ['2', '8', '.', '.', '.', '5', '.', '7', '9']
     """
-    row, col= pos
+    row, col = pos
     start_row = (row // 3) * 3
     start_col = (col // 3) * 3
 
@@ -103,7 +106,7 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
     """
     for r_idx, row in enumerate(grid):
         for c_idx, char in enumerate(row):
-            if char == '.':
+            if char == ".":
                 return (r_idx, c_idx)
             return None
     pass
@@ -151,7 +154,7 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
         solution = solve(grid)
         if solution:
             return solution
-        grid[row][col] = '.'
+        grid[row][col] = "."
         return None
     pass
 
