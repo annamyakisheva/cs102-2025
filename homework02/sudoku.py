@@ -1,3 +1,4 @@
+import random
 import pathlib
 import typing as tp
 
@@ -108,7 +109,7 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
         for c in range(len(grid)):
             if grid[r][c] == ".":
                 return (r, c)
-            return None
+    return None
     pass
 
 
@@ -153,7 +154,7 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
         if solution:
             return solution
         grid[row][col] = "."
-        return None
+    return None
     pass
 
 
